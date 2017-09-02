@@ -1,0 +1,29 @@
+{
+  "name": "slackbot_weather",
+  "version": "1.0.0",
+  "description": "slackbot demo",
+  "main": "app.js",
+  "dependencies": {
+    "botkit": "^0.5.8",
+    "google": "^2.1.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wong.eddiek@arrayschool.com",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wongeddiek/slackbot_weather.git"
+  },
+  "keywords": [
+    "slackbot",
+    "weather"
+  ],
+  "bugs": {
+    "url": "https://github.com/wongeddiek/slackbot_weather/issues"
+  },
+  "homepage": "https://github.com/wongeddiek/slackbot_weather#readme"
+}
