@@ -29,18 +29,31 @@ function getWeather(city, convo){
   //make the weather API request
   request(fullURL, function (error, response, body) {
     // Print the error if one occurred
-    if(error) {
+    if (error) {
       console.log('error:', error);
-      convo.say('There was an error with the request, try again later');
+      convo.say('There was an error with the request, try again later \n' + `Error: ${error.message}`);
+      return;
     }
-    //parse the return data and build reply msg into a string
-    let weatherInfo = JSON.parse(body);
-    console.log('statusCode:', response && response.statusCode);
-    let replyMsg = `The current weather info in ${weatherInfo.name}: \n`;
-    replyMsg += `Temperature: ${weatherInfo.main.temp} F \n`;
-    replyMsg += `Today's high temp is ${weatherInfo.main.temp_max} F and and low temp is ${weatherInfo.main.temp_min} F`;
-    //sends reply message to slack
-    convo.say(replyMsg);
+    if (response.statusCode === 404) {
+      console.log(`error: status code ${response.statusCode}, city not found.`);
+      convo.say(`I'm sorry, we couldn't find the city you're looking for.`);
+    } else {
+      //parse the return data and build reply msg into a string
+      let weatherInfo = JSON.parse(body);
+      console.log('statusCode:', response && response.statusCode);
+      let replyMsg = `The current weather info in ${weatherInfo.name}: \n`;
+      replyMsg += `Current temperature: ${weatherInfo.main.temp} F \n`;
+      replyMsg += `Current humidty: ${weatherInfo.main.humidity}% \n`;
+
+      let weatherCondition = [];
+      weatherInfo.weather.forEach(element => {
+        weatherCondition.push(element.description);
+      });
+      replyMsg += `Current condition: ${weatherCondition.join(', ')}`;
+
+      //sends reply message to slack
+      convo.say(replyMsg);
+    }
   });
 }
 // connect the bot to a stream of messages
