@@ -17,6 +17,13 @@ var weatherURL = `http://api.openweathermap.org/data/2.5/weather?`;
 var units = `&units=imperial`;
 var weatherID = `&appid=efd6b2d346411d1198df74f3bd9b7365`;
 
+//function for converting degrees to compass direction
+function degToCompass(num) {
+  var val = Math.floor((num / 22.5) + 0.5);
+  var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+  return arr[(val % 16)];
+}
+
 //function for getting weather info and bot reply:
 function getWeather(city, convo){
   var fullURL;
@@ -43,15 +50,21 @@ function getWeather(city, convo){
       //parse the return data and build reply msg into a string
       let weatherInfo = JSON.parse(body);
       console.log('statusCode:', response && response.statusCode);
-      let replyMsg = `The current weather info in ${weatherInfo.name}: \n`;
-      replyMsg += `Current temperature: ${weatherInfo.main.temp} F \n`;
-      replyMsg += `Current humidty: ${weatherInfo.main.humidity}% \n`;
+      let replyMsg = `Weather information in ${weatherInfo.name}: \n`;
 
+      //get all weather condition descriptions (multiple descriptions are stored in an array)
       let weatherCondition = [];
       weatherInfo.weather.forEach(element => {
         weatherCondition.push(element.description);
       });
-      replyMsg += `Current condition: ${weatherCondition.join(', ')}`;
+      replyMsg += `current condition: ${weatherCondition.join(', ')} \n`;
+
+      replyMsg += `current temperature: ${weatherInfo.main.temp} F \n`;
+      replyMsg += `current humidty: ${weatherInfo.main.humidity}% \n`;
+      replyMsg += `current wind: ${weatherInfo.wind.speed}mph, ${degToCompass(weatherInfo.wind.deg)} or ${weatherInfo.wind.deg} degrees.`;
+
+
+
 
       //sends reply message to slack
       convo.say(replyMsg);
