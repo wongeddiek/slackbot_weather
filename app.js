@@ -76,7 +76,7 @@ controller.spawn({
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
-controller.hears([/weather/], ['direct_message','direct_mention','mention'], function(bot,message) {
+controller.hears([/[wW]eather/], ['direct_message','direct_mention','mention'], function(bot,message) {
   console.log('message received!');
   bot.startConversation(message, function(err, convo){
     //asks user which city they want the weather info for
