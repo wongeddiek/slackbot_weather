@@ -34,6 +34,8 @@ function getWeather(city, convo){
       convo.say('There was an error with the request, try again later \n' + `Error: ${error.message}`);
       return;
     }
+
+    //if city is not found
     if (response.statusCode === 404) {
       console.log(`error: status code ${response.statusCode}, city not found.`);
       convo.say(`I'm sorry, we couldn't find the city you're looking for.`);
