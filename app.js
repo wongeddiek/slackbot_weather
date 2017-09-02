@@ -1,4 +1,3 @@
-'use strict';
 //botkit to manage bot conversation
 const Botkit = require('botkit');
 //request for API requests
@@ -12,10 +11,13 @@ const controller = Botkit.slackbot({
   debug: false
 });
 
+//reading credentials.json file
+const credentials = JSON.parse(fs.readFileSync('credentials.json'));
+
 //initializing weather API URL path
 var weatherURL = `http://api.openweathermap.org/data/2.5/weather?`;
 var units = `&units=imperial`;
-var weatherID = `&appid=efd6b2d346411d1198df74f3bd9b7365`;
+var weatherID = `&appid=${credentials.api}`;  //use you own Open Weather Map API key here
 
 //function for converting degrees to compass direction
 function degToCompass(num) {
@@ -63,9 +65,6 @@ function getWeather(city, convo){
       replyMsg += `current humidty: ${weatherInfo.main.humidity}% \n`;
       replyMsg += `current wind: ${weatherInfo.wind.speed}mph, ${degToCompass(weatherInfo.wind.deg)} or ${weatherInfo.wind.deg} degrees.`;
 
-
-
-
       //sends reply message to slack
       convo.say(replyMsg);
     }
@@ -73,7 +72,7 @@ function getWeather(city, convo){
 }
 // connect the bot to a stream of messages
 controller.spawn({
-  token: JSON.parse(fs.readFileSync('token.json')).token, //use your own slackbot token here
+  token: credentials.token, //use your own slackbot token here
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
