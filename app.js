@@ -72,7 +72,7 @@ function getWeather(city, convo){
 }
 // connect the bot to a stream of messages
 controller.spawn({
-  token: credentials.token, //use your own slackbot token here
+  token: credentials.appToken, //use your own slackbot token here
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
@@ -81,8 +81,7 @@ controller.hears([/[wW]eather/], ['direct_message','direct_mention','mention'], 
   bot.startConversation(message, function(err, convo){
     //asks user which city they want the weather info for
     convo.addQuestion("What's the city you want me to get weather info for (type in [City Name, Country Name])?", function(response, convo) {
-      convo.say('Cool, you said ' + response.text);
-      convo.say('Let me get that information for you...');
+      convo.say(`Cool, you said ${response.text}.  Let me get the weather info for you...`);
       //runs the getWeather funciton and sends weather info as reply
       getWeather(response.text, convo);
       convo.next();
