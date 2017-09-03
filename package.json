@@ -4,7 +4,6 @@
   "description": "slackbot demo",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js",
     "start": "node app.js"
   },
   "dependencies": {
