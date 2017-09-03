@@ -2,9 +2,6 @@
   "name": "slackbot_weather",
   "version": "1.0.0",
   "description": "slackbot demo",
-  "scripts": {
-    "start": "node app.js"
-  },
   "main": "app.js",
   "dependencies": {
     "botkit": "^0.5.8",
@@ -13,6 +10,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "wong.eddiek@arrayschool.com",
