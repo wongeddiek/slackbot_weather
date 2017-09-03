@@ -2,3 +2,10 @@ name: Weather Bot
 author: wong.eddiek@arrayschool.com
 email: wong.eddiek@arrayschool.com
 description: A simple weather bot
+config:
+  - name: SLACK_API_TOKEN
+  - friendly_name: Slackbot API token
+  - type: secret
+  - global: true
+slackscopes:
+  - bot

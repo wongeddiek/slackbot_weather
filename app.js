@@ -41,14 +41,16 @@ function getWeather(city, convo){
     if (error) {
       console.log('error:', error);
       convo.say('There was an error with the request, try again later \n' + `Error: ${error.message}`);
+      convo.end();
       return;
     }
 
     //if city is not found
     if (response.statusCode === 404) {
       console.log(`error: status code ${response.statusCode}, city not found.`);
-      convo.say(`I'm sorry, we couldn't find the city you're looking for.`);
-    } else {
+      convo.say(`I'm sorry, I couldn't find the city you're looking for.  Let's try again.`);
+      convo.repeat();
+    } else if (response.statusCode === 200) {
       //parse the return data and build reply msg into a string
       let weatherInfo = JSON.parse(body);
       console.log('statusCode:', response && response.statusCode);
@@ -67,12 +69,16 @@ function getWeather(city, convo){
       console.log(replyMsg);
       //sends reply message to slack
       convo.say(replyMsg);
+      convo.next();
+    } else {
+      convo.say(`Beep boop, looks like the weatherman is slacking off.  Let's try again.`);
+      convo.repeat();
     }
   });
 }
 // connect the bot to a stream of messages
 controller.spawn({
-  token: credentials.arrayToken, //use your own slackbot token here
+  token: process.env.TOKEN, //use your own slackbot token here
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
@@ -84,7 +90,6 @@ controller.hears([/weather/i], ['direct_message','direct_mention','mention'], fu
       convo.say(`Cool, you said ${response.text}.  Let me get the weather info for you...`);
       //runs the getWeather funciton and sends weather info as reply
       getWeather(response.text, convo);
-      convo.next();
     });
   });
 });
