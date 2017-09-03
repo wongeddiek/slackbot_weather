@@ -78,7 +78,7 @@ function getWeather(city, convo){
 }
 // connect the bot to a stream of messages
 controller.spawn({
-  token: process.env.TOKEN, //use your own slackbot token here
+  token: process.env.SLACK_API_TOKEN, //use your own slackbot token here
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
