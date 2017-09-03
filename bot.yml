@@ -7,5 +7,9 @@ config:
     friendly_name: Slackbot API token
     type: secret
     global: true
+  - name: WEATHER_APIID
+    friendly_name: OpenWeatherMap API ID
+    type: secret
+    global: true    
 slackscopes:
   - bot
