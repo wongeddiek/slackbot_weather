@@ -2,10 +2,10 @@
   "name": "slackbot_weather",
   "version": "1.0.0",
   "description": "slackbot demo",
-  "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
+  "main": "app.js",
   "dependencies": {
     "botkit": "^0.5.8",
     "google": "^2.1.0",
