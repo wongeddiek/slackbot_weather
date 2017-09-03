@@ -64,7 +64,7 @@ function getWeather(city, convo){
       replyMsg += `current temperature: ${weatherInfo.main.temp} F \n`;
       replyMsg += `current humidty: ${weatherInfo.main.humidity}% \n`;
       replyMsg += `current wind: ${weatherInfo.wind.speed}mph, ${degToCompass(weatherInfo.wind.deg)} or ${weatherInfo.wind.deg} degrees.`;
-
+      console.log(replyMsg);
       //sends reply message to slack
       convo.say(replyMsg);
     }
@@ -72,11 +72,11 @@ function getWeather(city, convo){
 }
 // connect the bot to a stream of messages
 controller.spawn({
-  token: credentials.appToken, //use your own slackbot token here
+  token: credentials.arrayToken, //use your own slackbot token here
 }).startRTM();
 
 //runs when bot receives dm's and mentions with keyword "weather"
-controller.hears([/[wW]eather/], ['direct_message','direct_mention','mention'], function(bot,message) {
+controller.hears([/weather/i], ['direct_message','direct_mention','mention'], function(bot,message) {
   console.log('message received!');
   bot.startConversation(message, function(err, convo){
     //asks user which city they want the weather info for
