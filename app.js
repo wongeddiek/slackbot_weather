@@ -1,9 +1,11 @@
+"use strict";
+
 //botkit to manage bot conversation
 const Botkit = require('botkit');
 //request for API requests
 const request = require('request');
 //read/write local json file
-const fs = require('fs');
+// const fs = require('fs');
 // const google = require('google');
 
 //initializing bot
@@ -12,12 +14,12 @@ const controller = Botkit.slackbot({
 });
 
 //reading credentials.json file
-const credentials = JSON.parse(fs.readFileSync('credentials.json'));
+// const credentials = JSON.parse(fs.readFileSync('credentials.json'));
 
 //initializing weather API URL path
 var weatherURL = `http://api.openweathermap.org/data/2.5/weather?`;
 var units = `&units=imperial`;
-var weatherID = `&appid=${credentials.api}`;  //use you own Open Weather Map API key here
+var weatherID = `&appid=${process.env.WEATHER_APIID}`;  //use you own Open Weather Map API key here
 
 //function for converting degrees to compass direction
 function degToCompass(num) {
